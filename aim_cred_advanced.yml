@@ -1,0 +1,18 @@
+---
+- name: get credential
+  hosts: all
+  tasks:
+  - name: credential retrieval advanced
+    cyberark_credential:
+      api_base_url: "{{ aim_base_url }}"
+      validate_certs: "{{ aim_validate_certs | default yes }}"
+      client_cert: /etc/pki/ca-trust/source/client.pem
+      client_key: /etc/pki/ca-trust/source/priv-key.pem
+      app_id: "{{ aim_app_id }}"
+      query: "{{ aim_query }}"
+      connection_timeout: 60
+      query_format: Exact
+      fail_request_on_password_change: True
+      reason: "requesting credential for Ansible deployment"
+    register: {{ result }}
+    
