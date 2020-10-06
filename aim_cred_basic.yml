@@ -7,6 +7,7 @@
         api_base_url: "{{ aim_base_url }}"
         app_id: "{{ aim_base_app_id }}"
         query: "{{ aim_base_query }}"
+        validate_certs: "{{ aim_validate_certs | default false }}"
     register: result
     
   - debug:
