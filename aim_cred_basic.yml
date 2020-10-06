@@ -9,21 +9,11 @@
         query: "{{ aim_base_query }}"
         validate_certs: "{{ aim_validate_certs }}"
     register: result
-  
-  block:
-    - name: wait 10 seconds if Cyberark is changing the password
-      pause: 
-        seconds: 10
-        
-    - name: credential retrieval basic
-      cyberark.pas.cyberark_credential:
-        api_base_url: "{{ aim_base_url }}"
-        app_id: "{{ aim_base_app_id }}"
-        query: "{{ aim_base_query }}"
-        validate_certs: "{{ aim_validate_certs }}"
-    register: result
-    when: result.PasswordChangeInProcess == True
-    
-  - name: set root ssh password
+
+  - debug:
+      var: result
+      
+  - name: set machine cred password
     set_fact:
       ansible_password: "{{ result.Content }}"
+      
