@@ -23,6 +23,7 @@
         validate_certs: "{{ aim_validate_certs | default (false) }}"
     register: result
     when: result.PasswordChangeInProcess == True
-    
-  - debug:
-      var: result.Content
+  
+  - name: set root ssh password
+    set_fact:
+      ansible_password: "{{ result.Content }}"
