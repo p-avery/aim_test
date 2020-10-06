@@ -7,9 +7,9 @@
         api_base_url: "{{ aim_base_url }}"
         app_id: "{{ aim_base_app_id }}"
         query: "{{ aim_base_query }}"
-        validate_certs: "{{ aim_validate_certs | default (false) }}"
+        validate_certs: "{{ aim_validate_certs }}"
     register: result
-
+  
   block:
     - name: wait 10 seconds if Cyberark is changing the password
       pause: 
@@ -20,10 +20,10 @@
         api_base_url: "{{ aim_base_url }}"
         app_id: "{{ aim_base_app_id }}"
         query: "{{ aim_base_query }}"
-        validate_certs: "{{ aim_validate_certs | default (false) }}"
+        validate_certs: "{{ aim_validate_certs }}"
     register: result
     when: result.PasswordChangeInProcess == True
-  
+    
   - name: set root ssh password
     set_fact:
       ansible_password: "{{ result.Content }}"
