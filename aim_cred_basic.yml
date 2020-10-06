@@ -11,7 +11,10 @@
     register: result
 
   block:
-    - wait: 10
+    - name: wait 10 seconds if Cyberark is changing the password
+      pause: 
+        seconds: 10
+        
     - name: credential retrieval basic
       cyberark.pas.cyberark_credential:
         api_base_url: "{{ aim_base_url }}"
